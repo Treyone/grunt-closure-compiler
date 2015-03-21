@@ -48,7 +48,7 @@ module.exports = function(grunt) {
         //case : js parameter passed (no module then)
         if(data.js && data.js.length && data.js.length>0) {
 
-            command += ' --js "' + data.js.join('" --js "') + '"';
+            command += ' --js="' + data.js.join('" --js="') + '"';
             if (data.jsOutputFile) {
                 if (!grunt.file.isPathAbsolute(data.jsOutputFile)) {
                     data.jsOutputFile = path.resolve('./') + '/' + data.jsOutputFile;
@@ -60,7 +60,7 @@ module.exports = function(grunt) {
 
         if (data.externs) {
             data.externs = grunt.file.expand(data.externs);
-            command += ' --externs ' + data.externs.join(' --externs ');
+            command += ' --externs=' + data.externs.join(' --externs=');
 
             if (!data.externs.length) {
                 delete data.externs;
@@ -77,20 +77,21 @@ module.exports = function(grunt) {
         //adding module compilation support
         if(data.modules){
             if(data.modules.output_path_prefix){
-                command += ' --module_output_path_prefix ' + data.modules.output_path_prefix+' ';
+                command += ' --module_output_path_prefix=' + data.modules.output_path_prefix+' ';
             }
             if(data.modules.definitions){
                 for(var module in data.modules.definitions){
                     for(var fileIndex = 0;fileIndex<data.modules.definitions[module].files.length;fileIndex++){
-                        command += ' --js ' +data.modules.definitions[module].files[fileIndex]+' ';
+                        command += ' --js=' + data.modules.definitions[module].files[fileIndex] + ' ';
                     }
-                    command += ' --module '+module+':'+data.modules.definitions[module].files.length;
+                    command += ' --module ' + module + ':' +
+					    (data.modules.definitions[module].autoLength ? 'auto' : data.modules.definitions[module].files.length);
                     if(data.modules.definitions[module].dependencies && data.modules.definitions[module].dependencies.length>0){
-                        command+=':'+data.modules.definitions[module].dependencies.join(',');
+                        command += ':' + data.modules.definitions[module].dependencies.join(',');
                     }
-                    command+= ' ';
+                    command += ' ';
                     if(data.modules.definitions[module].wrapper){
-                        command+='--module_wrapper '+module+':"'+data.modules.definitions[module].wrapper+'" ';
+                        command += '--module_wrapper ' + module + ':"' + data.modules.definitions[module].wrapper + '" ';
                     }
                 }
 
