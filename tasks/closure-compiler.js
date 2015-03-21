@@ -101,11 +101,11 @@ module.exports = function(grunt) {
 
         for (var directive in data.options) {
             if (Array.isArray(data.options[directive])) {
-                command += ' --' + directive + ' ' + data.options[directive].join(' --' + directive + ' ');
+                command += ' --' + directive + '=' + data.options[directive].join(' --' + directive + '=');
             } else if (data.options[directive] === undefined || data.options[directive] === null) {
                 command += ' --' + directive;
             } else {
-                command += ' --' + directive + ' "' + String(data.options[directive]) + '"';
+                command += ' --' + directive + '="' + String(data.options[directive]) + '"';
             }
         }
 
