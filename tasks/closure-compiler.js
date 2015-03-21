@@ -119,8 +119,6 @@ module.exports = function(grunt) {
             }
         }
 
-console.log(command);
-
         // Minify WebGraph class.
         exec(command, { maxBuffer: data.maxBuffer * 1024, cwd: data.cwd }, function(err, stdout, stderr) {
             if (err) {
